@@ -1,5 +1,7 @@
 using HotelListing.Configuration;
 using HotelListing.Data;
+using HotelListing.Interfaces;
+using HotelListing.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -16,6 +18,8 @@ builder.Services.AddDbContext<HotelContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<ICountriesRepo , CountryRepo>();
 
 builder.Services.AddCors(options =>
 {
